@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence 
+    xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+    http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+    version="1.0">
+    <persistence-unit name="pu">
+
+     <class>com.supinfo.entity.User</class>
+ 
+     <properties>
+        <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+		<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
+		<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/4jva_project" />
+		<property name="eclipselink.jdbc.user" value="root" />
+		<property name="eclipselink.jdbc.password" value="" />
+ 
+          <!--
+          EclipseLink should create the database schema automatically
+          -->
+          <property name="eclipselink.ddl-generation.output-mode" value="database" />
+          <property name="eclipselink.logging.level" value="ALL" />
+          <property name="eclipselink.target-database" value="MySQL" />
+     </properties>
+    </persistence-unit>
+</persistence>
