@@ -22,16 +22,16 @@ public class User implements Serializable{
 	private int id;
 	
 	@Column(nullable=true)
-	private String lastname;
+	private String nom;
 	
 	@Column(nullable=true)
-	private String firstname;
+	private String prenom;
 	
 	@Column(nullable=false)
 	private String login;
 	
 	@Column(nullable=false)
-	private String pwd;
+	private String mdp;
 
 	@Column(nullable=true)
 	private String token;
@@ -40,20 +40,20 @@ public class User implements Serializable{
 		return id;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getNom() {
+		return nom;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getPrenom() {
+		return prenom;
 	}
 
 	public String getLogin() {
 		return login;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getMdp() {
+		return mdp;
 	}
 
 	public String getToken() {
@@ -64,25 +64,24 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
 	}
 
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
 
 }
