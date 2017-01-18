@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.supinfo.database.PersistenceManager;
+import com.supinfo.entity.Cours;
 import com.supinfo.entity.User;
 import com.supinfo.interfaces.InterfacesDao;
 
@@ -54,5 +55,11 @@ public class InterfaceDaoImpl implements InterfacesDao{
 		return true;
 	}
 
+	public List<Cours> getCours(){
+		EntityManager em = PersistenceManager.getEntityManager();
+		Query query = (Query) em.createQuery("Select c FROM Cours c ");
+		List<Cours> cours = query.getResultList();
+		return cours;
+	}
 
 }

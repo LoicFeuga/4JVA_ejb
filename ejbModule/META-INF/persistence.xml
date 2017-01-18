@@ -9,6 +9,8 @@
 
      <class>com.supinfo.entity.User</class>
  
+     <class>com.supinfo.entity.Cours</class>
+ 
      <properties>
         <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 		<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
