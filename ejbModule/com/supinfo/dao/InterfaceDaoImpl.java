@@ -28,16 +28,17 @@ public class InterfaceDaoImpl implements InterfacesDao{
 	 * Permet de controler l'accès 
 	 */
 	@Override
-	public boolean login(String login, String password) {
+	public boolean login(String login, String mdp) {
 		EntityManager em = PersistenceManager.getEntityManager();
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> query = cb.createQuery(User.class);
 		Root<User> person = query.from(User.class);
-		query.where(cb.equal(person.get("login"), login)).where(cb.equal(person.get("password"), password));
+		query.where(cb.equal(person.get("login"), login)).where(cb.equal(person.get("mdp"), mdp));
 		
 		List<User> persons = em.createQuery(query).getResultList();
-	
+		//Boolean isEmpty = persons.isEmpty();
+		//return !(isEmpty == null ? false : isEmpty);
 		return !persons.isEmpty();
 	}
 
