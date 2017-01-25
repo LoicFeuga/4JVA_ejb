@@ -1,24 +1,19 @@
 package com.supinfo.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="cours")
 public class Cours implements Serializable{
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(nullable=false)
@@ -30,6 +25,18 @@ public class Cours implements Serializable{
 	@Column(nullable=true)
 	private String type;
 
+	public Cours(){
+		libelle = "";
+		description ="";
+		type ="";
+	}
+	
+	public Cours(String libelle, String description, String type){
+		this.libelle = libelle;
+		this.description = description;
+		this.type = type;
+	}
+	
 	public int getId() {
 		return id;
 	}
