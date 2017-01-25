@@ -40,29 +40,23 @@ public class InterfaceDaoImpl implements InterfacesDao {
 	 */
 	@Override
 	public boolean login(String login, String mdp) {
+		if("".equals(login) || "".equals(mdp) || login == null || mdp == null){
+			return false;
+		}
+		
 		EntityManager em = PersistenceManager.getEntityManager();
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> query = cb.createQuery(User.class);
 		Root<User> person = query.from(User.class);
 
-		query.where(cb.equal(person.get("login"), login)).where(cb.equal(person.get("mdp"),mdp));
+		query.where(
+				cb.equal(person.get("login"), login),
+				cb.equal(person.get("mdp"),mdp)
+				);
 
 		List<User> persons = em.createQuery(query).getResultList();
 		return !persons.isEmpty();
-	}
-
-	/**
-	 * Permet d'enregistrer une nouvelle personne
-	 */
-	@Override
-	public boolean signin(String email, String password) {
-
-		EntityManager em = PersistenceManager.getEntityManager();
-		Query query = (Query) em
-				.createQuery("INSERT INTO User (email, pwd) VALUES ('" + email + "','" + password + "') ");
-
-		return true;
 	}
 
 	public List<Cours> getCours() {
@@ -83,7 +77,10 @@ public class InterfaceDaoImpl implements InterfacesDao {
 
 	@Override
 	public boolean signup(String login, String mdp, String nom, String prenom) {
-
+		if("".equals(login) || "".equals(mdp) || login == null || mdp == null){
+			return false;
+		}
+		
 		EntityManager em = PersistenceManager.getEntityManager();
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
