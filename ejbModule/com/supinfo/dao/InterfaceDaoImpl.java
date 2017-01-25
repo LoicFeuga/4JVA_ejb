@@ -46,21 +46,9 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		CriteriaQuery<User> query = cb.createQuery(User.class);
 		Root<User> person = query.from(User.class);
 
-		query.where(cb.equal(person.get("login"), login));// .where(cb.equal(person.get("mdp"),
-															// mdp));
-
-		// Query query2 = (Query) em.createQuery("Select u FROM User u WHERE
-		// u.login ='"+login+"' AND u.mdp = '"+mdp+"' ");
+		query.where(cb.equal(person.get("login"), login)).where(cb.equal(person.get("mdp"),mdp));
 
 		List<User> persons = em.createQuery(query).getResultList();
-		// for(User user : persons){
-		// System.out.println(user.getNom());
-		// }
-		// System.out.println(persons.toString());
-		// List<User> persons2 = query2.getResultList();
-		// for(User user : persons2){
-		// System.out.println(user.getPrenom());
-		// }
 		return !persons.isEmpty();
 	}
 
@@ -97,13 +85,24 @@ public class InterfaceDaoImpl implements InterfacesDao {
 	public boolean signup(String login, String mdp, String nom, String prenom) {
 
 		EntityManager em = PersistenceManager.getEntityManager();
-
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> query = cb.createQuery(User.class);
 		Root<User> person = query.from(User.class);
+		query.where(cb.equal(person.get("login"), login));
+		
+		if(!em.createQuery(query).getResultList().isEmpty()){
+			return false;
+		}else{
 
-		// TODO Auto-generated method stub
-		return true;
+			em.getTransaction().begin();
+			
+			em.persist(new User(login,mdp,nom,prenom));
+	
+			em.getTransaction().commit();
+			
+			return true;
+		}
 	}
 
 	@Override

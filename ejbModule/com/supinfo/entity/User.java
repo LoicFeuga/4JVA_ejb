@@ -31,6 +31,16 @@ public class User implements Serializable{
 	@Column(nullable=true)
 	private String token;
 
+	public User(){
+		
+	}
+	public User(String login, String mdp, String nom, String prenom){
+		this.login = login;
+		this.mdp = mdp;
+		this.nom = nom;
+		this.prenom = prenom;
+	}
+	
 	public int getId() {
 		return id;
 	}
