@@ -37,11 +37,16 @@ public class InterfaceDaoImpl implements InterfacesDao {
 
 	/**
 	 * Permet de controler l'accès
+	 * 
+	 * return -2 = login ou mdp null ou ""
+	 * return -1 = existe pas ce login ou mdp pas bon
+	 * 
+	 * return > 0 = id du mec
 	 */
 	@Override
-	public boolean login(String login, String mdp) {
+	public int login(String login, String mdp) {
 		if("".equals(login) || "".equals(mdp) || login == null || mdp == null){
-			return false;
+			return -2;
 		}
 		
 		EntityManager em = PersistenceManager.getEntityManager();
@@ -54,9 +59,14 @@ public class InterfaceDaoImpl implements InterfacesDao {
 				cb.equal(person.get("login"), login),
 				cb.equal(person.get("mdp"),mdp)
 				);
-
+		
 		List<User> persons = em.createQuery(query).getResultList();
-		return !persons.isEmpty();
+		if(!persons.isEmpty()){
+			System.out.println("COTE BACK : "+persons.get(0).getId());
+			return persons.get(0).getId();
+		}
+		
+		return -1;
 	}
 
 	public List<Cours> getCours() {
@@ -91,7 +101,6 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		if(!em.createQuery(query).getResultList().isEmpty()){
 			return false;
 		}else{
-
 			em.getTransaction().begin();
 			
 			em.persist(new User(login,mdp,nom,prenom));
