@@ -1,13 +1,19 @@
 package com.supinfo.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="user")
@@ -23,17 +29,28 @@ public class User implements Serializable{
 	private String prenom;
 	
 	@Column(nullable=false)
+    @NotNull(message="login needed")
 	private String login;
 	
 	@Column(nullable=false)
+    @NotNull(message="mdp needed")
 	private String mdp;
 
 	@Column(nullable=true)
 	private String token;
+	
+	@ManyToMany
+	@JoinTable(name="user_has_cours",joinColumns=@JoinColumn(name="user_id",referencedColumnName="id"),
+    	inverseJoinColumns=@JoinColumn(name="cours_id",referencedColumnName="id"))
+	private Collection<Cours> cours;
 
+	@OneToMany(mappedBy="user")
+	private Collection<Certification> certifications;
+	
 	public User(){
 		
 	}
+	
 	public User(String login, String mdp, String nom, String prenom){
 		this.login = login;
 		this.mdp = mdp;
@@ -87,6 +104,22 @@ public class User implements Serializable{
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public Collection<Cours> getCours() {
+		return cours;
+	}
+
+	public Collection<Certification> getCertifications() {
+		return certifications;
+	}
+
+	public void setCours(Collection<Cours> cours) {
+		this.cours = cours;
+	}
+
+	public void setCertifications(Collection<Certification> certifications) {
+		this.certifications = certifications;
 	}
 
 }

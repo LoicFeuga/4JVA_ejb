@@ -7,9 +7,12 @@
     version="1.0">
     <persistence-unit name="pu">
 
-     <class>com.supinfo.entity.User</class>
- 
+     <class>com.supinfo.entity.User</class> 
      <class>com.supinfo.entity.Cours</class>
+     <class>com.supinfo.entity.Certification</class>
+     <class>com.supinfo.entity.Fichier</class>
+     <class>com.supinfo.entity.Question</class>
+     <class>com.supinfo.entity.Reponse</class>
  
      <properties>
 <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>

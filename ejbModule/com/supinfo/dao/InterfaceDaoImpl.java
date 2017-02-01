@@ -44,9 +44,9 @@ public class InterfaceDaoImpl implements InterfacesDao {
 	 * return > 0 = id du mec
 	 */
 	@Override
-	public int login(String login, String mdp) {
+	public User login(String login, String mdp) {
 		if("".equals(login) || "".equals(mdp) || login == null || mdp == null){
-			return -2;
+			return null;
 		}
 		
 		EntityManager em = PersistenceManager.getEntityManager();
@@ -60,13 +60,21 @@ public class InterfaceDaoImpl implements InterfacesDao {
 				cb.equal(person.get("mdp"),mdp)
 				);
 		
-		List<User> persons = em.createQuery(query).getResultList();
-		if(!persons.isEmpty()){
-			System.out.println("COTE BACK : "+persons.get(0).getId());
-			return persons.get(0).getId();
+		List<User> list = (List<User>) em.createQuery(query).getResultList();
+		User user = null;
+		
+		if(list.isEmpty() ){
+			return null;
+		}else{
+			 user = em.createQuery(query).getResultList().get(0);
 		}
 		
-		return -1;
+		if(user != null){
+
+			return user;
+		}
+		
+		return null;
 	}
 
 	public List<Cours> getCours() {
@@ -82,6 +90,9 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		TypedQuery<Cours> q = em.createQuery(cq);
 		List<Cours> allCours = q.getResultList();
 		
+		for(int i = 0 ; i < allCours.size();i++){
+			System.out.println(allCours.get(i).getLibelle());
+		}
 		return allCours;
 	}
 

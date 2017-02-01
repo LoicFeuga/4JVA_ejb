@@ -1,12 +1,14 @@
 package com.supinfo.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +27,14 @@ public class Cours implements Serializable{
 	@Column(nullable=true)
 	private String type;
 
+	@OneToMany(mappedBy="cours")
+	private Collection<Certification> certification;
+	@OneToMany(mappedBy="cours")
+	private Collection<Fichier> fichiers;
+	@OneToMany(mappedBy="cours")
+	private Collection<Question> questions;
+	
+	
 	public Cours(){
 		libelle = "";
 		description ="";
@@ -67,6 +77,30 @@ public class Cours implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Collection<Certification> getCertification() {
+		return certification;
+	}
+
+	public Collection<Fichier> getFichiers() {
+		return fichiers;
+	}
+
+	public Collection<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setCertification(Collection<Certification> certification) {
+		this.certification = certification;
+	}
+
+	public void setFichiers(Collection<Fichier> fichiers) {
+		this.fichiers = fichiers;
+	}
+
+	public void setQuestions(Collection<Question> questions) {
+		this.questions = questions;
 	}
 	
 
