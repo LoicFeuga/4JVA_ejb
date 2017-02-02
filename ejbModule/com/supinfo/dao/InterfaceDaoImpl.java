@@ -8,14 +8,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.AbstractQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 import org.eclipse.persistence.sessions.Session;
 
 import com.supinfo.database.PersistenceManager;
+import com.supinfo.entity.Certification;
 import com.supinfo.entity.Cours;
+import com.supinfo.entity.Fichier;
 import com.supinfo.entity.User;
 import com.supinfo.interfaces.InterfacesDao;
 
@@ -24,6 +29,8 @@ public class InterfaceDaoImpl implements InterfacesDao {
 
 	// @PersistenceContext(unitName="pu")
 	// EntityManager em2;
+
+	private static final String Pet_ = null;
 
 	@Override
 	public List<User> getUsers() {
@@ -60,13 +67,39 @@ public class InterfaceDaoImpl implements InterfacesDao {
 				cb.equal(person.get("mdp"),mdp)
 				);
 		
-		List<User> list = (List<User>) em.createQuery(query).getResultList();
+		
+		EntityManager em1 = PersistenceManager.getEntityManager();
+		Metamodel m = em1.getMetamodel();
+		EntityType <User> User_ =m.entity(User.class);
+		Root<User> User = ((AbstractQuery<User>) m).from(User_);
+		
+		
+		EntityManager em2 = PersistenceManager.getEntityManager();
+		Metamodel m1 = em2.getMetamodel();
+		EntityType <Cours>  Cours_ =m1.entity(Cours.class);
+		Root<Cours> Cours = ((AbstractQuery<Cours>) m1).from(Cours_);
+		
+		
+		EntityManager em3 = PersistenceManager.getEntityManager();
+		Metamodel m4 = em3.getMetamodel();
+		EntityType <Certification>  Certification_ =m4.entity(Certification.class);
+		Root<Certification> Certification = ((AbstractQuery<Cours>) m4).from(Certification_);
+		
+		EntityManager em4 = PersistenceManager.getEntityManager();
+		Metamodel m3 = em4.getMetamodel();
+		EntityType <Fichier>  Fichier_ =m3.entity(Fichier.class);
+		Root<Fichier> Fichier = ((AbstractQuery<Fichier>) m3).from(Fichier_);
+
+		
+		
+		
+		List<User> list = (List<User>) em3.createQuery(query).getResultList();
 		User user = null;
 		
 		if(list.isEmpty() ){
 			return null;
 		}else{
-			 user = em.createQuery(query).getResultList().get(0);
+			 user = em3.createQuery(query).getResultList().get(0);
 		}
 		
 		if(user != null){
@@ -95,6 +128,10 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		}
 		return allCours;
 	}
+	
+	
+	
+	
 
 	@Override
 	public boolean signup(String login, String mdp, String nom, String prenom) {
