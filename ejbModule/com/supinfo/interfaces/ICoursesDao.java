@@ -28,6 +28,9 @@ public interface ICoursesDao {
 	public Certification addCertification(Certification certification);
 	
 	public User findUserById(Long Id);
+	public User findUserByToken(String token);
+	
+	public Cours findCoursById(Long Id);
 	
 	
 	public void removeUser(User user);
@@ -38,6 +41,7 @@ public interface ICoursesDao {
 	public void removeCertification(Certification certification);
 	
 	public boolean verifLoginUser(String login, String mdp);
+	;
 	
 	
 	

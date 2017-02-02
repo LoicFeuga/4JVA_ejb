@@ -89,6 +89,7 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		Metamodel m3 = em4.getMetamodel();
 		EntityType <Fichier>  Fichier_ =m3.entity(Fichier.class);
 		Root<Fichier> Fichier = ((AbstractQuery<Fichier>) m3).from(Fichier_);
+		
 
 		
 		

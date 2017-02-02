@@ -117,16 +117,33 @@ public class CoursesDaoImpl implements ICoursesDao {
 		return em.createQuery("select c from User c").getResultList();
 	}
 	
+	@Override
 	public User findUserById(Long Id){
 		em = PersistenceManager.getEntityManager();
 		return em.find(User.class, Id);
 	}
+	
+	
+	@Override
+	public User findUserByToken(String token){
+		em = PersistenceManager.getEntityManager();
+		return em.find(User.class, token);
+	}
+	
+	@Override
+	public Cours findCoursById(Long Id){
+		em = PersistenceManager.getEntityManager();
+		return em.find(Cours.class, Id);
+	}
+	
+	
 	
 	@Override
 	public void removeUser(User user){
 		em = PersistenceManager.getEntityManager();
 		em.remove(user);
 	}
+	
 	
 
 		
