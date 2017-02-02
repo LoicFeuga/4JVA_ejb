@@ -54,6 +54,7 @@ public class CoursesDaoImpl implements ICoursesDao {
 		return user;
 		
 	}
+	
 	@Override
 	public Cours addCours(Cours cours){
 		em = PersistenceManager.getEntityManager();
@@ -74,7 +75,6 @@ public class CoursesDaoImpl implements ICoursesDao {
 		et.commit();
 		em.close();
 		return fichier;
-		
 	}
 	@Override
 	public Question addQuestion(Question question){
@@ -185,6 +185,8 @@ public class CoursesDaoImpl implements ICoursesDao {
 		List<Cours> allCours = q.getResultList();
 		return allCours;
 	}
+	
+
 
 	@Override
 	public List<Fichier> getAllFichier() {

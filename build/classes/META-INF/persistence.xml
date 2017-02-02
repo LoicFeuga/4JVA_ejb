@@ -19,7 +19,7 @@
 		<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:8889/4jva_project" />
 		<property name="eclipselink.jdbc.user" value="root" />
-		<property name="eclipselink.jdbc.password" value="" />
+		<property name="eclipselink.jdbc.password" value="root" />
  
           <!--
           EclipseLink should create the database schema automatically
