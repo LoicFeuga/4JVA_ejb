@@ -28,6 +28,7 @@ import com.supinfo.entity.Question;
 import com.supinfo.entity.Reponse;
 import com.supinfo.entity.Certification;
 import com.supinfo.entity.User;
+import com.supinfo.entity.User_;
 import com.supinfo.interfaces.ICoursesDao;
 
 @Stateless
@@ -179,13 +180,17 @@ public class CoursesDaoImpl implements ICoursesDao {
 	@Override
 	public boolean verifLoginUser(String login, String mdp){
 		em = PersistenceManager.getEntityManager();
-		Query qr = em.createQuery("select u from User u where u.login=:X and u.mdp=:Y");
-		qr.setParameter("X", login);
-		qr.setParameter("Y", mdp);
-		User user = (User) qr.getSingleResult();
-		if (user == null) {
-			return false;
-		}
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> query = cb.createQuery(User.class);
+		Root<User> rootUser = query.from(User.class);
+		
+		query.where(cb.equal(rootUser.get(User_.login), login), cb.equal(rootUser.get(User_.mdp), mdp));
+		
+		List<User> list = em.createQuery(query).getResultList();
+		
+		if(list.isEmpty()) return false;
+		
 		return true;	
 	}
 	

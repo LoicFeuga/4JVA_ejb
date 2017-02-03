@@ -31,8 +31,6 @@ public class InterfaceDaoImpl implements InterfacesDao {
 	// @PersistenceContext(unitName="pu")
 	// EntityManager em2;
 
-	private static final String Pet_ = null;
-
 	@Override
 	public List<User> getUsers() {
 		EntityManager em = PersistenceManager.getEntityManager();
@@ -57,63 +55,21 @@ public class InterfaceDaoImpl implements InterfacesDao {
 			return null;
 		}
 		
-//		EntityManager em = PersistenceManager.getEntityManager();
-//
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		CriteriaQuery<User> query = cb.createQuery(User.class);
-//		Root<User> person = query.from(User.class);
-//
-//		query.where(
-//				cb.equal(person.get("login"), login),
-//				cb.equal(person.get("mdp"),mdp)
-//				);
-		
-		
 		EntityManager em = PersistenceManager.getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> q = cb.createQuery(User.class);
-
-		Metamodel m = em.getMetamodel();
 		Root<User> rootUser = q.from(User.class);
 		
-		// use metadata class to define the where clause
-		q.where(cb.equal(rootUser.get(User_.login), login),cb.equal(rootUser.get(User_.mdp), mdp));
-
-
-//		EntityManager em2 = PersistenceManager.getEntityManager();
-//		Metamodel m1 = em2.getMetamodel();
-//		EntityType <Cours>  Cours_ =m1.entity(Cours.class);
-//		Root<Cours> Cours = ((AbstractQuery<Cours>) m1).from(Cours_);
-//		
-//		
-//		EntityManager em3 = PersistenceManager.getEntityManager();
-//		Metamodel m4 = em3.getMetamodel();
-//		EntityType <Certification>  Certification_ =m4.entity(Certification.class);
-//		Root<Certification> Certification = ((AbstractQuery<Cours>) m4).from(Certification_);
-//		
-//		EntityManager em4 = PersistenceManager.getEntityManager();
-//		Metamodel m3 = em4.getMetamodel();
-//		EntityType <Fichier>  Fichier_ =m3.entity(Fichier.class);
-//		Root<Fichier> Fichier = ((AbstractQuery<Fichier>) m3).from(Fichier_);
-		
-
-		
+		//WHERE login = login AND mdp = mdp
+		q.where(
+				cb.equal(rootUser.get(User_.login), login),
+				cb.equal(rootUser.get(User_.mdp), mdp)
+				);
 		
 		List<User> list = (List<User>) em.createQuery(q).getResultList();
-		User user = null;
 		
-		if(list.isEmpty() ){
-			return null;
-		}else{
-			 user = list.get(0);
-		}
-		
-		if(user != null){
-
-			return user;
-		}
-		
-		return null;
+		if(list.isEmpty() ) return null;
+		else return (User) list.get(0);
 	}
 
 	public List<Cours> getCours() {
@@ -135,10 +91,6 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		return allCours;
 	}
 	
-	
-	
-	
-
 	@Override
 	public boolean signup(String login, String mdp, String nom, String prenom) {
 		if("".equals(login) || "".equals(mdp) || login == null || mdp == null){
@@ -149,16 +101,16 @@ public class InterfaceDaoImpl implements InterfacesDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> query = cb.createQuery(User.class);
-		Root<User> person = query.from(User.class);
-		query.where(cb.equal(person.get("login"), login));
+		Root<User> rootUser = query.from(User.class);
+		
+		query.where(cb.equal(rootUser.get(User_.login), login));
 		
 		if(!em.createQuery(query).getResultList().isEmpty()){
 			return false;
 		}else{
 			em.getTransaction().begin();
 			
-			em.persist(new User(login,mdp,nom,prenom));
-	
+			em.persist(new User(login,mdp,nom,prenom));	
 			em.getTransaction().commit();
 			
 			return true;
