@@ -9,15 +9,20 @@ import com.supinfo.entity.Cours;
 import com.supinfo.entity.Question;
 import com.supinfo.entity.User;
 import com.supinfo.interfaces.ICoursesDao;
+import com.supinfo.interfaces.ICoursesServices;
 import com.supinfo.interfaces.InterfacesDao;
 
 @Stateless
 @WebService(name="courses-api")
-public class UserService {
-	
+public class UserService implements ICoursesServices {
 	
 	@EJB
 	InterfacesDao dao;
+	
+	@EJB
+	ICoursesDao daoc;
+	
+	
 	
 //	@WebMethod
 //	public String login(@WebParam(name = "log") String log, @WebParam(name = "mdp") String mdp){
@@ -25,52 +30,62 @@ public class UserService {
 //		return dao.login(log, mdp) +"" ;
 //		
 //	}
-	
+
+	@Override
 	@WebMethod
 	public String authenticate(@WebParam(name = "login") String login, @WebParam(name = "mdp") String mdp ){
 		User u = dao.login(login, mdp);	
 		if (u != null){
 			return u.getToken();
 		}
-		return "null";
+		return null;
 	}
-	
+
+	@Override
 	@WebMethod
-	public User getUser(Long idUser){
-		
-		User u = new User();
-		u.setLogin("jdhf");
-		u.setNom("liloudini");
-		u.setPrenom("aziz");
-		u.setMdp("zzzz");
-		return u;
+	public User getUser(@WebParam(name = "idUser")Long idUser){
+		return daoc.findUserById(idUser);
 	}
 	
+	@Override
 	@WebMethod
 	public List<Cours> getCours(){
-		
 		return dao.getCours();
 	}
-	
+
+	@Override
 	@WebMethod
-	public Cours getCoursById(Long idCours){
-		
+	public Cours getCoursById(@WebParam(name = "idCours")Long idCours){
+		return daoc.findCoursById(idCours);
+	}
+	
+	@Override
+	@WebMethod
+	public Cours takeCours(@WebParam(name = "idCours")Long idCours,@WebParam(name = "idUser")Long idUser){
+		User u = daoc.findUserById(idUser);
+		if (u!=null) {
+			if (!u.getToken().equals(null)) {
+				Cours c = daoc.findCoursById(idCours);
+				return daoc.findCoursById(idCours);
+			}
+		}
 		return null;
 	}
 	
+	@Override
 	@WebMethod
-	public Cours takeCours(Long idCours,Long idUser){
-		
-		
+	public List<Question> passQuizz(@WebParam(name = "idCours")Long idCours,@WebParam(name = "idUser")Long idUser){
+		User u = daoc.findUserById(idUser);
+		if (u!=null) {
+			if (!u.getToken().equals(null)) {
+				Cours c = daoc.findCoursById(idCours);
+				return (List<Question>) c.getQuestions();
+			}
+		}
 		return null;
 	}
 	
-	@WebMethod
-	public List<Question> passQuuizz(Long idCours,Long idUser){
-		
-		
-		return null;
-	}
+	
 			
 	
 }
