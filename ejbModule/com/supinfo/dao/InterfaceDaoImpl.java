@@ -22,6 +22,7 @@ import com.supinfo.entity.Certification;
 import com.supinfo.entity.Cours;
 import com.supinfo.entity.Fichier;
 import com.supinfo.entity.User;
+import com.supinfo.entity.User_;
 import com.supinfo.interfaces.InterfacesDao;
 
 @Stateless
@@ -56,51 +57,55 @@ public class InterfaceDaoImpl implements InterfacesDao {
 			return null;
 		}
 		
+//		EntityManager em = PersistenceManager.getEntityManager();
+//
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
+//		CriteriaQuery<User> query = cb.createQuery(User.class);
+//		Root<User> person = query.from(User.class);
+//
+//		query.where(
+//				cb.equal(person.get("login"), login),
+//				cb.equal(person.get("mdp"),mdp)
+//				);
+		
+		
 		EntityManager em = PersistenceManager.getEntityManager();
-
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<User> query = cb.createQuery(User.class);
-		Root<User> person = query.from(User.class);
+		CriteriaQuery<User> q = cb.createQuery(User.class);
 
-		query.where(
-				cb.equal(person.get("login"), login),
-				cb.equal(person.get("mdp"),mdp)
-				);
+		Metamodel m = em.getMetamodel();
+		Root<User> rootUser = q.from(User.class);
 		
-		
-		EntityManager em1 = PersistenceManager.getEntityManager();
-		Metamodel m = em1.getMetamodel();
-		EntityType <User> User_ =m.entity(User.class);
-		Root<User> User = ((AbstractQuery<User>) m).from(User_);
-		
-		
-		EntityManager em2 = PersistenceManager.getEntityManager();
-		Metamodel m1 = em2.getMetamodel();
-		EntityType <Cours>  Cours_ =m1.entity(Cours.class);
-		Root<Cours> Cours = ((AbstractQuery<Cours>) m1).from(Cours_);
-		
-		
-		EntityManager em3 = PersistenceManager.getEntityManager();
-		Metamodel m4 = em3.getMetamodel();
-		EntityType <Certification>  Certification_ =m4.entity(Certification.class);
-		Root<Certification> Certification = ((AbstractQuery<Cours>) m4).from(Certification_);
-		
-		EntityManager em4 = PersistenceManager.getEntityManager();
-		Metamodel m3 = em4.getMetamodel();
-		EntityType <Fichier>  Fichier_ =m3.entity(Fichier.class);
-		Root<Fichier> Fichier = ((AbstractQuery<Fichier>) m3).from(Fichier_);
+		// use metadata class to define the where clause
+		q.where(cb.equal(rootUser.get(User_.login), login),cb.equal(rootUser.get(User_.mdp), mdp));
+
+
+//		EntityManager em2 = PersistenceManager.getEntityManager();
+//		Metamodel m1 = em2.getMetamodel();
+//		EntityType <Cours>  Cours_ =m1.entity(Cours.class);
+//		Root<Cours> Cours = ((AbstractQuery<Cours>) m1).from(Cours_);
+//		
+//		
+//		EntityManager em3 = PersistenceManager.getEntityManager();
+//		Metamodel m4 = em3.getMetamodel();
+//		EntityType <Certification>  Certification_ =m4.entity(Certification.class);
+//		Root<Certification> Certification = ((AbstractQuery<Cours>) m4).from(Certification_);
+//		
+//		EntityManager em4 = PersistenceManager.getEntityManager();
+//		Metamodel m3 = em4.getMetamodel();
+//		EntityType <Fichier>  Fichier_ =m3.entity(Fichier.class);
+//		Root<Fichier> Fichier = ((AbstractQuery<Fichier>) m3).from(Fichier_);
 		
 
 		
 		
-		
-		List<User> list = (List<User>) em3.createQuery(query).getResultList();
+		List<User> list = (List<User>) em.createQuery(q).getResultList();
 		User user = null;
 		
 		if(list.isEmpty() ){
 			return null;
 		}else{
-			 user = em3.createQuery(query).getResultList().get(0);
+			 user = list.get(0);
 		}
 		
 		if(user != null){
