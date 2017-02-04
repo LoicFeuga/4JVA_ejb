@@ -27,10 +27,10 @@ public interface ICoursesDao {
 	public Reponse addReponse(Reponse reponse);
 	public Certification addCertification(Certification certification);
 	
-	public User findUserById(Long Id);
+	public User findUserById(int Id);
 	public User findUserByToken(String token);
 	
-	public Cours findCoursById(Long Id);
+	public Cours findCoursById(int Id);
 	
 	
 	public void removeUser(User user);

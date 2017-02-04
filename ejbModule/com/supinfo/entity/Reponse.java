@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Reponse implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private int id;
 	private String libelle;
 	private String descritpion;
 	private Boolean reponse;
@@ -24,11 +24,11 @@ public class Reponse implements Serializable {
 	@JoinColumn(name="idQuestion")
 	private Question question;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

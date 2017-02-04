@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Question implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private int id;
 	private String libelle;
 	private String descritpion;
 	
@@ -37,10 +37,10 @@ public class Question implements Serializable {
 		this.libelle = libelle;
 		this.descritpion = descritpion;
 	}
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getLibelle() {

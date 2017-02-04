@@ -58,6 +58,7 @@ public class CoursesDaoImpl implements ICoursesDao {
 	
 	@Override
 	public Cours addCours(Cours cours){
+		System.out.println(cours.getLibelle());
 		em = PersistenceManager.getEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
@@ -119,9 +120,21 @@ public class CoursesDaoImpl implements ICoursesDao {
 	}
 	
 	@Override
-	public User findUserById(Long Id){
+	public User findUserById(int Id){
 		em = PersistenceManager.getEntityManager();
-		return em.find(User.class, Id);
+	
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> q = cb.createQuery(User.class);
+		Root<User> rootUser = q.from(User.class);
+
+		q.where(
+				cb.equal(rootUser.get(User_.id), Id)
+				);
+
+		List<User> list = (List<User>) em.createQuery(q).getResultList();
+		
+		if(list.isEmpty() ) return null;
+		else return (User) list.get(0);
 	}
 	
 	
@@ -132,7 +145,7 @@ public class CoursesDaoImpl implements ICoursesDao {
 	}
 	
 	@Override
-	public Cours findCoursById(Long Id){
+	public Cours findCoursById(int Id){
 		em = PersistenceManager.getEntityManager();
 		return em.find(Cours.class, Id);
 	}

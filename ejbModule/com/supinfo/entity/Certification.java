@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Certification implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private int id;
 	private String libelle;
 	private String descritpion;
 	private Date dateCetif;
@@ -28,10 +28,10 @@ public class Certification implements Serializable {
 	@JoinColumn(name="idCours")
 	private Cours cours;
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getLibelle() {
