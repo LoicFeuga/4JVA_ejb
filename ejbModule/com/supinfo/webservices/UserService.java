@@ -45,7 +45,7 @@ public class UserService implements ICoursesServices {
 
 	@Override
 	@WebMethod
-	public User getUser(@WebParam(name = "idUser")Long idUser){
+	public User getUser(@WebParam(name = "idUser")int idUser){
 		return daoc.findUserById(idUser);
 	}
 	
@@ -57,13 +57,13 @@ public class UserService implements ICoursesServices {
 
 	@Override
 	@WebMethod
-	public Cours getCoursById(@WebParam(name = "idCours")Long idCours){
+	public Cours getCoursById(@WebParam(name = "idCours")int idCours){
 		return daoc.findCoursById(idCours);
 	}
 	
 	@Override
 	@WebMethod
-	public Cours takeCours(@WebParam(name = "idCours")Long idCours,@WebParam(name = "idUser")Long idUser){
+	public Cours takeCours(@WebParam(name = "idCours")int idCours,@WebParam(name = "idUser")int idUser){
 		User u = daoc.findUserById(idUser);
 		if (u!=null) {
 			if (!u.getToken().equals(null)) {
@@ -76,7 +76,7 @@ public class UserService implements ICoursesServices {
 	
 	@Override
 	@WebMethod
-	public List<Question> passQuizz(@WebParam(name = "idCours")Long idCours,@WebParam(name = "idUser")Long idUser){
+	public List<Question> passQuizz(@WebParam(name = "idCours")int idCours,@WebParam(name = "idUser")int idUser){
 		User u = daoc.findUserById(idUser);
 		if (u!=null) {
 			if (!u.getToken().equals(null)) {
