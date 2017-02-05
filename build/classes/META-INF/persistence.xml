@@ -15,11 +15,11 @@
      <class>com.supinfo.entity.Reponse</class>
  
      <properties>
-<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+		<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
 		<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
-		<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:8889/4jva_project" />
+		<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/4jva_project" />
 		<property name="eclipselink.jdbc.user" value="root" />
-		<property name="eclipselink.jdbc.password" value="root" />
+		<property name="eclipselink.jdbc.password" value="" />
  
           <!--
           EclipseLink should create the database schema automatically
